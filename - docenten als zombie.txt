@@ -1,0 +1,17 @@
+- docenten als zombie
+- studenten als planten
+- scoreboard
+- zombies moeten bewegen, 1 zombie is de speler
+- zombies zijn uniek -> bewegen net wat anders/lopen net wat sneller
+-
+
+
+
+-------------------tijd over-----------------------
+- munten systeem
+- eigen muziek
+
+
+
+-------------------storyline-----------------------
+De studenten zijn de slechte code aan het beschermen tegen de docenten.
