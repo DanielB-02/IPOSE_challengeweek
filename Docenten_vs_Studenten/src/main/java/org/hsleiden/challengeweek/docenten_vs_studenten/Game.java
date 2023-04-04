@@ -29,6 +29,10 @@ public class Game extends GameApplication {
     private Entity plant;
 
     private Entity erwt;
+    private Entity left;
+    private Entity top;
+    private Entity right;
+    private Entity bottom;
 
     @Override
     protected void initGame() {
@@ -51,6 +55,31 @@ public class Game extends GameApplication {
                 .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.ERWT)
+                .buildAndAttach();
+
+        left = FXGL.entityBuilder()
+                .at(690, 50)
+                .viewWithBBox(new Rectangle(10, 400))
+                .with(new CollidableComponent(true))
+                .type(EntityTypes.LEFT)
+                .buildAndAttach();
+        right = FXGL.entityBuilder()
+                .at(40, 50)
+                .viewWithBBox(new Rectangle(10, 400))
+                .with(new CollidableComponent(true))
+                .type(EntityTypes.RIGHT)
+                .buildAndAttach();
+        top = FXGL.entityBuilder()
+                .at(40, 50)
+                .viewWithBBox(new Rectangle(650, 10))
+                .with(new CollidableComponent(true))
+                .type(EntityTypes.TOP)
+                .buildAndAttach();
+        bottom = FXGL.entityBuilder()
+                .at(40, 450)
+                .viewWithBBox(new Rectangle(650, 10))
+                .with(new CollidableComponent(true))
+                .type(EntityTypes.BOTTOM)
                 .buildAndAttach();
     }
 
@@ -75,14 +104,42 @@ public class Game extends GameApplication {
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.ERWT) {
             @Override
             protected void onCollision(Entity player, Entity erwt) {
-                System.out.println("hallo");
+                System.out.println("player removed");
                 player.removeFromWorld();
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.ERWT, EntityTypes.LEFT) {
+            @Override
+            protected void onCollision(Entity erwt, Entity left) {
+                System.out.println("player removed");
+                erwt.removeFromWorld();
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.TOP) {
+            @Override
+            protected void onCollision(Entity player, Entity top) {
+                System.out.println("player touched the top");
+                player.translateY(5);
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.BOTTOM) {
+            @Override
+            protected void onCollision(Entity player, Entity bottom) {
+                System.out.println("player touched the bottom");
+                player.translateY(-5);
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.LEFT) {
+            @Override
+            protected void onCollision(Entity player, Entity left) {
+                System.out.println("player touched the left");
+                player.translateX(-5);
             }
         });
     }
     @Override
     protected void onUpdate(double tpf) {
-        erwt.translateX(5);
+        erwt.translateX(2);
 //        if (erwt.isColliding(player)) {
 //            FXGL.entityBuilder()
 //                    .at(erwt.getX(), erwt.getY())

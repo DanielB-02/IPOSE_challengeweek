@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc74e308-f7f5-4bdf-a086-86ec74b7af6f" name="Changes" comment="" />
+    <list default="true" id="fc74e308-f7f5-4bdf-a086-86ec74b7af6f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-14.40.12.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-14.40.22.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-14.40.58.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-14.41.24.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-14.41.34.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-14.47.36.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-14.48.14.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-14.48.43.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-15.34.37.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/FXGL-03-Apr-2023-15.37.04.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hsleiden/challengeweek/docenten_vs_studenten/EntityTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/hsleiden/challengeweek/docenten_vs_studenten/EntityTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hsleiden/challengeweek/docenten_vs_studenten/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/hsleiden/challengeweek/docenten_vs_studenten/Game.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,13 +43,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -45,6 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1680524183788</updated>
       <workItem from="1680524185244" duration="4099000" />
+      <workItem from="1680595467905" duration="1338000" />
     </task>
     <servers />
   </component>
