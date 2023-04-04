@@ -13,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -27,7 +29,11 @@ public class Game extends GameApplication {
     }
 
     private Entity player;
-    private Entity plant;
+    private Entity plant1;
+    private Entity plant2;
+    private ArrayList<Entity> plants = new ArrayList<>();
+
+    private ArrayList<Entity> erwten = new ArrayList<>();
 
     private Entity erwt;
     private Entity map;
@@ -46,12 +52,23 @@ public class Game extends GameApplication {
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PLAYER)
                 .buildAndAttach();
-        plant = FXGL.entityBuilder()
+
+        plant1 = FXGL.entityBuilder()
                 .at(155,155)
                 .viewWithBBox(new Rectangle(30, 30, Color.YELLOW))
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PLANT)
                 .buildAndAttach();
+
+        plant2 = FXGL.entityBuilder()
+                .at(155,235)
+                .viewWithBBox(new Rectangle(30, 30, Color.YELLOW))
+                .with(new CollidableComponent(true))
+                .type(EntityTypes.PLANT)
+                .buildAndAttach();
+
+        plants.add(plant1);
+        plants.add(plant2);
 
 //        FXGL.getGameTimer().runAtInterval(() -> {
 //            int ypos = 0;
@@ -83,17 +100,19 @@ public class Game extends GameApplication {
 //                    .buildAndAttach();
 //        }, Duration.millis(2200));
 
-        FXGL.getGameTimer().runAtInterval(() -> {
-            erwt = FXGL.entityBuilder()
-                    .at(plant.getPosition())
-                    .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
-                    .with(new CollidableComponent(true))
-                    .type(EntityTypes.ERWT)
-                    .buildAndAttach();
+        for (Entity plant : plants) {
+            FXGL.getGameTimer().runAtInterval(() -> {
+                erwt = FXGL.entityBuilder()
+                        .at(plant.getPosition())
+                        .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
+                        .with(new CollidableComponent(true))
+                        .type(EntityTypes.ERWT)
+                        .buildAndAttach();
 
-            // Set the erwt's velocity to shoot it in a certain direction
-            erwt.translateX(10);
-        }, Duration.seconds(2));
+                erwten.add(erwt);
+//                System.out.println(erwt.getPosition());
+            }, Duration.seconds(2));
+        }
 
         left = FXGL.entityBuilder()
                 .at(690, 50)
@@ -184,16 +203,17 @@ public class Game extends GameApplication {
     }
     @Override
     protected void onUpdate(double tpf) {
-        if (erwt != null) {
-            erwt.translateX(5);
+        for (Entity erwt : erwten) {
+            erwt.translateX(10);
         }
+    }
+
 //        if (erwt.isColliding(player)) {
 //            FXGL.entityBuilder()
 //                    .at(erwt.getX(), erwt.getY())
 //                    .view(new Circle(80, Color.RED))
 //                    .buildAndAttach();
 //        }
-    }
 
     public static void main(String[] args) {
         launch(args);
