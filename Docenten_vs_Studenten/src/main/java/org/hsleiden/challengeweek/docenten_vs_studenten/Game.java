@@ -12,7 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-
+import javafx.util.Duration;
 
 
 public class Game extends GameApplication {
@@ -50,12 +50,14 @@ public class Game extends GameApplication {
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PLANT)
                 .buildAndAttach();
-        erwt = FXGL.entityBuilder()
-                .at(100, 200)
-                .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
-                .with(new CollidableComponent(true))
-                .type(EntityTypes.ERWT)
-                .buildAndAttach();
+        FXGL.getGameTimer().runAtInterval(() -> {
+            erwt = FXGL.entityBuilder()
+                    .at(100, 200)
+                    .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
+                    .with(new CollidableComponent(true))
+                    .type(EntityTypes.ERWT)
+                    .buildAndAttach();
+        }, Duration.millis(2200));
 
         left = FXGL.entityBuilder()
                 .at(690, 50)
@@ -139,7 +141,10 @@ public class Game extends GameApplication {
     }
     @Override
     protected void onUpdate(double tpf) {
-        erwt.translateX(2);
+        if (erwt != null) {
+            erwt.translateX(5);
+            System.out.println(erwt.getPosition());
+        }
 //        if (erwt.isColliding(player)) {
 //            FXGL.entityBuilder()
 //                    .at(erwt.getX(), erwt.getY())
