@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import java.util.Random;
 
 
 public class Game extends GameApplication {
@@ -51,8 +52,29 @@ public class Game extends GameApplication {
                 .type(EntityTypes.PLANT)
                 .buildAndAttach();
         FXGL.getGameTimer().runAtInterval(() -> {
+            int ypos = 0;
+            Random random = new Random();
+            int randomNumber = random.nextInt(5);
+            System.out.println(randomNumber);
+            switch (randomNumber){
+                case 0:
+                    ypos = 400;
+                    break;
+                case 1:
+                    ypos = 320;
+                    break;
+                case 2:
+                    ypos = 240;
+                    break;
+                case 3:
+                    ypos = 160;
+                    break;
+                case 4:
+                    ypos = 80;
+                    break;
+            }
             erwt = FXGL.entityBuilder()
-                    .at(100, 200)
+                    .at(100, ypos)
                     .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
                     .with(new CollidableComponent(true))
                     .type(EntityTypes.ERWT)
@@ -113,7 +135,7 @@ public class Game extends GameApplication {
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.ERWT, EntityTypes.LEFT) {
             @Override
             protected void onCollision(Entity erwt, Entity left) {
-                System.out.println("player removed");
+                System.out.println("Erwt removed");
                 erwt.removeFromWorld();
             }
         });
@@ -143,7 +165,6 @@ public class Game extends GameApplication {
     protected void onUpdate(double tpf) {
         if (erwt != null) {
             erwt.translateX(5);
-            System.out.println(erwt.getPosition());
         }
 //        if (erwt.isColliding(player)) {
 //            FXGL.entityBuilder()
