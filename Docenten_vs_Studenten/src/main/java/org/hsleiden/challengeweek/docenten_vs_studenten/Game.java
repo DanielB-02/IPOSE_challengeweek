@@ -30,6 +30,7 @@ public class Game extends GameApplication {
     private Entity plant;
 
     private Entity erwt;
+    private Entity map;
     private Entity left;
     private Entity top;
     private Entity right;
@@ -51,35 +52,48 @@ public class Game extends GameApplication {
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PLANT)
                 .buildAndAttach();
+
+//        FXGL.getGameTimer().runAtInterval(() -> {
+//            int ypos = 0;
+//            Random random = new Random();
+//            int randomNumber = random.nextInt(5);
+//            System.out.println(randomNumber);
+//            switch (randomNumber){
+//                case 0:
+//                    ypos = 400;
+//                    break;
+//                case 1:
+//                    ypos = 320;
+//                    break;
+//                case 2:
+//                    ypos = 240;
+//                    break;
+//                case 3:
+//                    ypos = 160;
+//                    break;
+//                case 4:
+//                    ypos = 80;
+//                    break;
+//            }
+//            erwt = FXGL.entityBuilder()
+//                    .at(100, ypos)
+//                    .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
+//                    .with(new CollidableComponent(true))
+//                    .type(EntityTypes.ERWT)
+//                    .buildAndAttach();
+//        }, Duration.millis(2200));
+
         FXGL.getGameTimer().runAtInterval(() -> {
-            int ypos = 0;
-            Random random = new Random();
-            int randomNumber = random.nextInt(5);
-            System.out.println(randomNumber);
-            switch (randomNumber){
-                case 0:
-                    ypos = 400;
-                    break;
-                case 1:
-                    ypos = 320;
-                    break;
-                case 2:
-                    ypos = 240;
-                    break;
-                case 3:
-                    ypos = 160;
-                    break;
-                case 4:
-                    ypos = 80;
-                    break;
-            }
             erwt = FXGL.entityBuilder()
-                    .at(100, ypos)
+                    .at(plant.getPosition())
                     .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
                     .with(new CollidableComponent(true))
                     .type(EntityTypes.ERWT)
                     .buildAndAttach();
-        }, Duration.millis(2200));
+
+            // Set the erwt's velocity to shoot it in a certain direction
+            erwt.translateX(10);
+        }, Duration.seconds(2));
 
         left = FXGL.entityBuilder()
                 .at(690, 50)
@@ -130,6 +144,13 @@ public class Game extends GameApplication {
             protected void onCollision(Entity player, Entity erwt) {
                 System.out.println("player removed");
                 player.removeFromWorld();
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.PLANT) {
+            @Override
+            protected void onCollision(Entity player, Entity plant) {
+                System.out.println("plant removed");
+                plant.removeFromWorld();
             }
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.ERWT, EntityTypes.LEFT) {
