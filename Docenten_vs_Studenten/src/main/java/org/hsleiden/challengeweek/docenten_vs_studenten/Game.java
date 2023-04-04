@@ -15,6 +15,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -33,7 +35,8 @@ public class Game extends GameApplication {
     private Entity plant2;
     private ArrayList<Entity> plants = new ArrayList<>();
 
-    private ArrayList<Entity> erwten = new ArrayList<>();
+//    private ArrayList<Entity> erwten = new ArrayList<>();
+    HashMap<Entity, Entity> plantErwtMap = new HashMap<>();
 
     private Entity erwt;
     private Entity map;
@@ -92,26 +95,23 @@ public class Game extends GameApplication {
 //                    ypos = 80;
 //                    break;
 //            }
-//            erwt = FXGL.entityBuilder()
-//                    .at(100, ypos)
-//                    .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
-//                    .with(new CollidableComponent(true))
-//                    .type(EntityTypes.ERWT)
-//                    .buildAndAttach();
-//        }, Duration.millis(2200));
 
         for (Entity plant : plants) {
             FXGL.getGameTimer().runAtInterval(() -> {
-                erwt = FXGL.entityBuilder()
-                        .at(plant.getPosition())
-                        .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
-                        .with(new CollidableComponent(true))
-                        .type(EntityTypes.ERWT)
-                        .buildAndAttach();
+                if (plant.isActive()) {
+                    erwt = FXGL.entityBuilder()
+                            .at(plant.getPosition())
+                            .viewWithBBox(new Rectangle(20, 20, Color.BROWN))
+                            .with(new CollidableComponent(true))
+                            .type(EntityTypes.ERWT)
+                            .buildAndAttach();
 
-                erwten.add(erwt);
-//                System.out.println(erwt.getPosition());
+                    plantErwtMap.put(plant, erwt);
+                }
             }, Duration.seconds(2));
+            if (!plant.isActive()) {
+                FXGL.getGameTimer().clear();
+            }
         }
 
         left = FXGL.entityBuilder()
@@ -157,6 +157,11 @@ public class Game extends GameApplication {
     }
 
     @Override
+    protected void initGameVars(Map<String, Object> vars) {
+
+    }
+
+    @Override
     protected void initPhysics() {
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.ERWT) {
             @Override
@@ -170,6 +175,7 @@ public class Game extends GameApplication {
             protected void onCollision(Entity player, Entity plant) {
                 System.out.println("plant removed");
                 plant.removeFromWorld();
+                plants.remove(plant);
             }
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.ERWT, EntityTypes.LEFT) {
@@ -203,17 +209,16 @@ public class Game extends GameApplication {
     }
     @Override
     protected void onUpdate(double tpf) {
-        for (Entity erwt : erwten) {
-            erwt.translateX(10);
+        for (Map.Entry<Entity, Entity> entry : plantErwtMap.entrySet()) {
+            Entity plant = entry.getKey();
+            Entity erwt = entry.getValue();
+            if (!plant.isActive()) {
+                erwt.removeFromWorld();
+            }
+            erwt.translateX(5);
         }
     }
 
-//        if (erwt.isColliding(player)) {
-//            FXGL.entityBuilder()
-//                    .at(erwt.getX(), erwt.getY())
-//                    .view(new Circle(80, Color.RED))
-//                    .buildAndAttach();
-//        }
 
     public static void main(String[] args) {
         launch(args);
