@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
+
 
 public class Game extends GameApplication {
     private Grid grid;
@@ -52,6 +54,7 @@ public class Game extends GameApplication {
         player = FXGL.entityBuilder()
                 .at(400, 200)
                 .viewWithBBox(new Rectangle(30, 30, Color.RED))
+                .viewWithBBox(texture("", 40, 40))
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PLAYER)
                 .buildAndAttach();
