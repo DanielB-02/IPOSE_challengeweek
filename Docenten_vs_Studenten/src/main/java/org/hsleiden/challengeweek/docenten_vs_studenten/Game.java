@@ -13,12 +13,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import com.almasb.fxgl.entity.level.Level;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameScene;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 
 
@@ -51,10 +53,14 @@ public class Game extends GameApplication {
     protected void initGame() {
         grid = new Grid();
         grid.draw();
+
+        player = null;
+
+
+
         player = FXGL.entityBuilder()
                 .at(400, 200)
-                .viewWithBBox(new Rectangle(30, 30, Color.RED))
-                .viewWithBBox(texture("", 40, 40))
+                .viewWithBBox(texture("vincent_zombie.png", 80, 80))
                 .with(new CollidableComponent(true))
                 .type(EntityTypes.PLAYER)
                 .buildAndAttach();

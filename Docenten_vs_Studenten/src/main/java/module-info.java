@@ -3,7 +3,7 @@ module org.hsleiden.challengeweek.docenten_vs_studenten {
     requires javafx.fxml;
 
     requires com.almasb.fxgl.all;
-//    opens assets.textures;
+    opens assets.textures;
 
     opens org.hsleiden.challengeweek.docenten_vs_studenten to javafx.fxml;
     exports org.hsleiden.challengeweek.docenten_vs_studenten;
