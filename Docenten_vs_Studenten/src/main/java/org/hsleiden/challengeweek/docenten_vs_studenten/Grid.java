@@ -49,5 +49,4 @@ public class Grid {
                 .view(new Rectangle(CUBE_WIDTH, CUBE_WIDTH, this.cells[y][x].getColor()))
                 .buildAndAttach();
     }
-
 }
