@@ -79,8 +79,8 @@ public class PlantsApp extends GameApplication {
     }
 
     private void initElements() {
-        player1 = getGameWorld().spawn("player1", 700, 200)
-                
+        player1 = getGameWorld().spawn("player1", 700, 200);
+
 
 
         player2 = FXGL.entityBuilder()
@@ -165,9 +165,9 @@ public class PlantsApp extends GameApplication {
         });
         FXGL.onKey(KeyCode.W, () -> {
             if (isPlayer1Active) {
-                player1.translateY(5);
+                player1.translateY(-5);
             } else {
-                player2.translateY(5);
+                player2.translateY(-5);
             }
         });
         FXGL.onKey(KeyCode.S, () -> {
