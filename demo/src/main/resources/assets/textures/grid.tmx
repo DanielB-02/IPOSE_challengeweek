@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="10" height="6" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="lightgreen" tilewidth="32" tileheight="32" tilecount="49" columns="7">
+  <image source="../../../../../../../../../Downloads/download (1).png" width="225" height="225"/>
+ </tileset>
+ <tileset firstgid="50" name="green" tilewidth="32" tileheight="32" tilecount="2072" columns="37">
+  <image source="../../../../../../../../../Downloads/7190.jpg" width="1200" height="1800"/>
+ </tileset>
+ <tileset firstgid="2122" name="darkgreen" tilewidth="32" tileheight="32" tilecount="36" columns="9">
+  <image source="../../../../../../../../../Downloads/Flag_of_Libya_(1977–2011).svg.png" width="300" height="150"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="10" height="6">
+  <data encoding="csv">
+2122,1,50,2122,1,50,2122,1,50,2122,
+50,2122,1,50,2122,1,50,2122,1,50,
+1,50,2122,1,50,2122,1,50,2122,1,
+2122,1,50,2122,1,50,2122,1,50,2122,
+50,2122,1,50,2122,1,50,2122,1,50,
+1,50,2122,1,50,2122,1,50,2122,1
+</data>
+ </layer>
+</map>
