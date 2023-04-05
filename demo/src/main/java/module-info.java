@@ -3,6 +3,7 @@ module com.example.demo {
     requires javafx.fxml;
 
     requires com.almasb.fxgl.all;
+    opens assets.levels;
     opens assets.textures;
 
     opens com.example.demo to javafx.fxml;

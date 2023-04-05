@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.entity.*;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -10,10 +10,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.entityBuilder;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 
-public class PlantsFactory implements EntityFactory {
+public class EntityFactory implements com.almasb.fxgl.entity.EntityFactory {
 
-    @Spawns("platform")
+    @Spawns("border")
     public Entity newPlatform(SpawnData data){
         return entityBuilder(data)
                 .from(data)
@@ -22,15 +23,30 @@ public class PlantsFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("player")
+    @Spawns("player1")
     public Entity newPlayer(SpawnData data){
+        PhysicsComponent physicsComponent = new PhysicsComponent();
+        PlantsApp plantsApp = new PlantsApp();
+
+        return entityBuilder(data)
+                .viewWithBBox(texture("vincent_zombie.png", 60, 80))
+                .with(new CollidableComponent(true))
+                .type(PlantsTypes.PLAYER)
+                .with(physicsComponent)
+                .build();
+
+    }
+
+    @Spawns("erwt")
+    public Entity newErwt(SpawnData data){
         PhysicsComponent physicsComponent = new PhysicsComponent();
         physicsComponent.setBodyType(BodyType.DYNAMIC);
 
         return entityBuilder(data)
                 .from(data)
                 .viewWithBBox(new Rectangle(30, 30, Color.RED))
-                .with(new PhysicsComponent())
+                .with(physicsComponent)
+                .with()
                 .build();
 
     }
