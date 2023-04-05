@@ -2,12 +2,15 @@ package org.hsleiden.challengeweek.docenten_vs_studenten;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -15,6 +18,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 
@@ -47,6 +51,7 @@ public class Game extends GameApplication {
 
     @Override
     protected void initGame() {
+
         Button player1Button = new Button("Select Player 1");
         Button player2Button = new Button("Select Player 2");
 
@@ -135,6 +140,7 @@ public class Game extends GameApplication {
 //            }
 
         for (Entity plant : plants) {
+            int randomInterval = ThreadLocalRandom.current().nextInt(0,4) + 2;
             FXGL.getGameTimer().runAtInterval(() -> {
                 if (plant.isActive()) {
                     erwt = FXGL.entityBuilder()
@@ -146,10 +152,7 @@ public class Game extends GameApplication {
 
                     plantErwtMap.put(plant, erwt);
                 }
-            }, Duration.seconds(2));
-            if (!plant.isActive()) {
-                FXGL.getGameTimer().clear();
-            }
+            }, Duration.seconds(randomInterval));
         }
 
         left = FXGL.entityBuilder()
@@ -270,7 +273,7 @@ public class Game extends GameApplication {
             if (!plant.isActive()) {
                 erwt.removeFromWorld();
             }
-            erwt.translateX(5d);
+            erwt.translateX(5);
         }
     }
 

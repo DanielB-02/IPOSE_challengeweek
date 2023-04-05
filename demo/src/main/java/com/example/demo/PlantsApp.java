@@ -71,7 +71,7 @@ public class PlantsApp extends GameApplication {
             initElements();
             player1.removeFromWorld();
             FXGL.getGameScene().removeUINode(player1Button);
-            FXGL.getGameScene().removeUINode(player2Button);
+            FXGL.getGameScene().r emoveUINode(player2Button);
         });
 
         // add buttons to game scene
