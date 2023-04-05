@@ -26,20 +26,28 @@ public class Grid {
         for (int y = 0; y < ROWS; y++) {
             this.cells[y] = new Cell[COLS];
             for (int x = 0; x < COLS; x++) {
-                this.cells[y][x] = new Cell(colors[(x + y) % 3]);
+                isVeelVoudVanGridVanDrie(y, x);
             }
         }
+    }
+
+    private void isVeelVoudVanGridVanDrie(int y, int x) {
+        this.cells[y][x] = new Cell(colors[(x + y) % 3]);
     }
 
     public void draw() {
         for (int y = 0; y < ROWS; y++) {
             for (int x = 0; x < COLS; x++) {
-                FXGL.entityBuilder()
-                        .at(50 + x * CUBE_WIDTH, 50 + y * CUBE_WIDTH)
-                        .view(new Rectangle(CUBE_WIDTH, CUBE_WIDTH, this.cells[y][x].getColor()))
-                        .buildAndAttach();
+                tekenenVanGrid(y, x);
             }
         }
+    }
+
+    private void tekenenVanGrid(int y, int x) {
+        FXGL.entityBuilder()
+                .at(50 + x * CUBE_WIDTH, 50 + y * CUBE_WIDTH)
+                .view(new Rectangle(CUBE_WIDTH, CUBE_WIDTH, this.cells[y][x].getColor()))
+                .buildAndAttach();
     }
 
 }

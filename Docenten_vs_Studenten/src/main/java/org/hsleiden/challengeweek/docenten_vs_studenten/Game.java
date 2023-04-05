@@ -1,26 +1,20 @@
 package org.hsleiden.challengeweek.docenten_vs_studenten;
 
-import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.components.BoundingBoxComponent;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import com.almasb.fxgl.entity.level.Level;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
-import static com.almasb.fxgl.dsl.FXGLForKtKt.getGameScene;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
 
 
@@ -51,10 +45,6 @@ public class Game extends GameApplication {
 
     @Override
     protected void initGame() {
-        grid = new Grid();
-        grid.draw();
-
-        player = null;
 
 
 
