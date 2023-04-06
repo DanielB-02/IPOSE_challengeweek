@@ -2,11 +2,15 @@ package com.example.demo;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -19,6 +23,7 @@ import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.texture;
+import static com.sun.media.jfxmedia.logging.Logger.setLevel;
 
 public class PlantsApp extends GameApplication {
 
@@ -28,6 +33,7 @@ public class PlantsApp extends GameApplication {
     boolean userMadeChoice = false;
     private Entity plant1;
     private Entity plant2;
+    private Entity End;
     private ArrayList<Entity> plants = new ArrayList<>();
 
     //    private ArrayList<Entity> erwten = new ArrayList<>();
@@ -46,10 +52,11 @@ public class PlantsApp extends GameApplication {
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new EntityFactory());
-        setLevelFromMap("grid.tmx");
+        setLevelFromMap("level1.tmx");
 
         Button player1Button = new Button("Select Player 1");
         Button player2Button = new Button("Select Player 2");
+
 
         // set button actions to update current player variable
         player1Button.setOnAction(e ->{
@@ -76,6 +83,10 @@ public class PlantsApp extends GameApplication {
 
         player2Button.setTranslateX(500);
         player2Button.setTranslateY(200);
+    }
+
+    protected void initGameVars(Map<String, Object> vars) {
+        vars.put("level", 0);
     }
 
     private void initElements() {
@@ -135,6 +146,7 @@ public class PlantsApp extends GameApplication {
             protected void onCollision(Entity player, Entity erwt) {
                 System.out.println("player removed");
                 player.removeFromWorld();
+                nextLevel();
             }
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(PlantsTypes.PLAYER, PlantsTypes.PLANT) {
@@ -145,6 +157,13 @@ public class PlantsApp extends GameApplication {
                 plants.remove(plant);
             }
         });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(PlantsTypes.PLAYER, PlantsTypes.END) {
+            @Override
+            protected void onCollision(Entity player, Entity End) {
+                System.out.println("player reached the end");
+            }
+        });
+
     }
 
     @Override
@@ -177,6 +196,34 @@ public class PlantsApp extends GameApplication {
                 player2.translateY(5);
             }
         });
+    }
+
+    private void nextLevel() {
+        if (geti("level") == 1) {
+            showMessage("You finished the demo!");
+            return;
+        }
+
+        inc("level", +2); //Hij begint direct al met het spel. Niet de bedoeling. Hierdoor komt hij dus pas bij lvl 1, na het uitspelen van het begin
+
+        setLevel(geti("level"));
+    }
+
+    public void onPlayerDied(){
+        setLevel(geti("level"));
+    }
+
+    private void setLevel(int levelNum) {
+        if (player1 != null) {
+            player1.getComponent(PhysicsComponent.class).overwritePosition(new Point2D(50, 50));
+            player1.setZIndex(Integer.MAX_VALUE);
+        }
+
+        set("levelTime", 0.0);
+
+        Level level = setLevelFromMap("level" + levelNum  + ".tmx");
+
+
     }
 
     @Override

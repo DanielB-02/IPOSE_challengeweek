@@ -17,7 +17,14 @@ public class EntityFactory implements com.almasb.fxgl.entity.EntityFactory {
     @Spawns("border")
     public Entity newPlatform(SpawnData data){
         return entityBuilder(data)
-                .from(data)
+                .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
+                .with(new PhysicsComponent())
+                .build();
+    }
+
+    @Spawns("End")
+    public Entity newEnd(SpawnData data){
+        return entityBuilder(data)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
                 .with(new PhysicsComponent())
                 .build();
@@ -43,7 +50,6 @@ public class EntityFactory implements com.almasb.fxgl.entity.EntityFactory {
         physicsComponent.setBodyType(BodyType.DYNAMIC);
 
         return entityBuilder(data)
-                .from(data)
                 .viewWithBBox(new Rectangle(30, 30, Color.RED))
                 .with(physicsComponent)
                 .with()
