@@ -1,12 +1,16 @@
 package org.hsleiden.challengeweek.docenten_vs_studenten.demo;
 
+import com.almasb.fxgl.app.FXGLApplication;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.physics.CollisionHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.hsleiden.challengeweek.docenten_vs_studenten.EntityTypes;
 
@@ -14,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
-import static com.almasb.fxgl.dsl.FXGL.setLevelFromMap;
+import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class PlantsApp extends GameApplication {
 
@@ -23,10 +26,16 @@ public class PlantsApp extends GameApplication {
     public static final int HEIGHT_BOARD = 8 * 80;
     private Entity player1;
     private Entity player2;
+    private Entity background;
     private boolean isPlayer1Active = true;
     boolean userMadeChoice = false;
     private Entity plant1;
     private Entity plant2;
+    private Entity plant3;
+    private Entity plant4;
+    private Entity plant5;
+    private Entity plant6;
+
     private List<Entity> plants = new ArrayList<>();
 
     private List<Entity> erwten = new ArrayList<>();
@@ -41,17 +50,33 @@ public class PlantsApp extends GameApplication {
 
     @Override
     protected void initGame() {
+        getGameWorld().addEntities();
         getGameWorld().addEntityFactory(new EntityFactory());
-        setLevelFromMap("grid.tmx");
+        background = getGameWorld().spawn("background");
 
+        Button startButton = new Button("START THE GAME!");
+
+        FXGL.getGameScene().addUINode(startButton);
+
+        startButton.setTranslateX(500);
+        startButton.setTranslateY(200);
+
+        startButton.setOnAction(e ->{
+            initZombieButtons();
+            FXGL.getGameScene().removeUINode(startButton);
+
+        });
+    }
+
+    private void initZombieButtons() {
         Button player1Button = new Button("Select Player 1");
         Button player2Button = new Button("Select Player 2");
 
-        // set button actions to update current player variable
         player1Button.setOnAction(e ->{
             isPlayer1Active = true;
             initElements();
             player2.removeFromWorld();
+//            background.removeFromWorld();
             FXGL.getGameScene().removeUINode(player1Button);
             FXGL.getGameScene().removeUINode(player2Button);
         });
@@ -59,33 +84,43 @@ public class PlantsApp extends GameApplication {
             isPlayer1Active = false;
             initElements();
             player1.removeFromWorld();
+//            background.removeFromWorld();
             FXGL.getGameScene().removeUINode(player1Button);
             FXGL.getGameScene().removeUINode(player2Button);
         });
 
-        // add buttons to game scene
         FXGL.getGameScene().addUINode(player1Button);
         FXGL.getGameScene().addUINode(player2Button);
 
-        player1Button.setTranslateX(200);
-        player1Button.setTranslateY(200);
+        player1Button.setTranslateX(900);
+        player1Button.setTranslateY(450);
 
-        player2Button.setTranslateX(500);
-        player2Button.setTranslateY(200);
+        player2Button.setTranslateX(700);
+        player2Button.setTranslateY(325);
     }
 
     private void initElements() {
+        setLevelFromMap("grid.tmx");
+
         player1 = getGameWorld().spawn("player1", 700, 200);
         player2 = getGameWorld().spawn("player2", 700, 200);
 
-        plant1 = getGameWorld().spawn("plant", 155, 155);
-        plant2 = getGameWorld().spawn("plant", 155, 235);
+        plant1 = getGameWorld().spawn("plant", 265, 105);
+        plant2 = getGameWorld().spawn("plant", 265, 185);
+        plant3 = getGameWorld().spawn("plant", 265, 265);
+        plant4 = getGameWorld().spawn("plant", 265, 345);
+        plant5 = getGameWorld().spawn("plant", 265, 425);
+        plant6 = getGameWorld().spawn("plant", 265, 505);
 
         plants.add(plant1);
         plants.add(plant2);
+        plants.add(plant3);
+        plants.add(plant4);
+        plants.add(plant5);
+        plants.add(plant6);
 
         for (Entity plant : plants) {
-            int randomInterval = ThreadLocalRandom.current().nextInt(0,4) + 2;
+            int randomInterval = ThreadLocalRandom.current().nextInt(0,4) + 4;
             FXGL.getGameTimer().runAtInterval(() -> {
                 if (plant.isActive()) {
                     erwten.add(getGameWorld().spawn("erwt", plant.getPosition()));
@@ -100,7 +135,7 @@ public class PlantsApp extends GameApplication {
             @Override
             protected void onCollision(Entity player, Entity erwt) {
                 System.out.println("player removed");
-                player.removeFromWorld();
+                showGameOver();
             }
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.PLAYER, EntityTypes.PLANT) {
@@ -136,10 +171,13 @@ public class PlantsApp extends GameApplication {
             erwt.translateX(5d);
             if (erwt.getPosition().getX() > WIDTH_BOARD) {
                 erwt.removeFromWorld();
-                removeErwten.add(erwt);
             }
         }
         removeErwten.forEach(erwt -> erwten.remove(erwt));
+    }
+
+    private void showGameOver() {
+        showMessage("You died!", getGameController()::startNewGame);
     }
 
     public static void main(String[] args) {

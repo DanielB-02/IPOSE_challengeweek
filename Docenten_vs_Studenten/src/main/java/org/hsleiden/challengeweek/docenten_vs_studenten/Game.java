@@ -233,7 +233,6 @@ public class Game extends GameApplication {
             protected void onCollision(Entity player, Entity plant) {
                 System.out.println("plant removed");
                 plant.removeFromWorld();
-                plants.remove(plant);
             }
         });
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(EntityTypes.ERWT, EntityTypes.LEFT) {
